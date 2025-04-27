@@ -906,4 +906,364 @@
                     }
                 },
                 "Migraine": {
-                    description: "A neurological condition that causes severe headaches, often with additional
+                    description: "A neurological condition that causes severe headaches, often with additional symptoms like sensitivity to light and nausea.",
+                    symptoms: ["Headache", "Sensitivity to light", "Nausea", "Visual disturbances", "Dizziness"],
+                    urgency: "moderate",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Headache", "Nausea", "Dizziness"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 25;
+                        });
+                        
+                        if (severity > 6) prob += 15;
+                        if (duration === "hours" || duration === "days") prob += 10;
+                        
+                        return Math.min(prob, 95);
+                    }
+                },
+                "Tension Headache": {
+                    description: "A common type of headache characterized by mild to moderate pain that feels like a tight band around the head.",
+                    symptoms: ["Headache", "Neck pain", "Shoulder pain", "Fatigue", "Trouble sleeping"],
+                    urgency: "low",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Headache", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 30;
+                        });
+                        
+                        if (severity <= 6) prob += 20;
+                        if (duration === "days" || duration === "week" || duration === "weeks") prob += 15;
+                        
+                        return Math.min(prob, 90);
+                    }
+                },
+                "Sinusitis": {
+                    description: "Inflammation of the sinuses, often caused by an infection, leading to nasal congestion and facial pain.",
+                    symptoms: ["Headache", "Facial pain", "Nasal congestion", "Cough", "Fever", "Fatigue"],
+                    urgency: "low",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Headache", "Cough", "Fever", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 20;
+                        });
+                        
+                        if (severity <= 7) prob += 10;
+                        if (duration === "days" || duration === "week") prob += 15;
+                        
+                        return Math.min(prob, 85);
+                    }
+                },
+                "Gastroenteritis": {
+                    description: "Inflammation of the stomach and intestines, typically resulting from a viral or bacterial infection.",
+                    symptoms: ["Nausea", "Vomiting", "Diarrhea", "Abdominal pain", "Fever", "Headache"],
+                    urgency: "moderate",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Nausea", "Fever", "Headache", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 20;
+                        });
+                        
+                        if (severity > 5) prob += 15;
+                        if (duration === "hours" || duration === "days") prob += 15;
+                        
+                        return Math.min(prob, 90);
+                    }
+                },
+                "Anxiety": {
+                    description: "A mental health condition characterized by feelings of worry, nervousness, or fear that are strong enough to interfere with daily activities.",
+                    symptoms: ["Chest pain", "Shortness of breath", "Fatigue", "Headache", "Dizziness", "Nausea"],
+                    urgency: "moderate",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Chest pain", "Shortness of breath", "Fatigue", "Headache", "Dizziness"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 15;
+                        });
+                        
+                        if (severity > 4 && severity < 8) prob += 10;
+                        if (duration === "days" || duration === "week" || duration === "weeks" || duration === "month") prob += 15;
+                        
+                        return Math.min(prob, 80);
+                    }
+                },
+                "Pneumonia": {
+                    description: "An infection that inflames the air sacs in one or both lungs, which may fill with fluid.",
+                    symptoms: ["Cough", "Fever", "Shortness of breath", "Chest pain", "Fatigue"],
+                    urgency: "high",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Cough", "Fever", "Shortness of breath", "Chest pain", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 15;
+                        });
+                        
+                        if (severity >= 7) prob += 20;
+                        if (duration === "days" || duration === "week") prob += 10;
+                        
+                        return Math.min(prob, 90);
+                    }
+                },
+                "Dehydration": {
+                    description: "A condition that occurs when your body loses more fluids than it takes in.",
+                    symptoms: ["Fatigue", "Dizziness", "Headache", "Dry mouth", "Nausea"],
+                    urgency: "moderate",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Fatigue", "Dizziness", "Headache", "Nausea"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 20;
+                        });
+                        
+                        if (severity <= 6) prob += 10;
+                        if (duration === "hours" || duration === "days") prob += 15;
+                        
+                        return Math.min(prob, 85);
+                    }
+                },
+                "Back Strain": {
+                    description: "An injury to the muscles or tendons in the back, often caused by overuse or improper lifting.",
+                    symptoms: ["Back pain", "Muscle spasms", "Limited mobility", "Fatigue"],
+                    urgency: "low",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Back pain", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 40;
+                        });
+                        
+                        if (severity > 3 && severity < 9) prob += 10;
+                        if (duration === "days" || duration === "week") prob += 10;
+                        
+                        return Math.min(prob, 90);
+                    }
+                }
+            };
+            
+            // Analyze button functionality
+            const analyzeBtn = document.getElementById('analyze-btn');
+            analyzeBtn.addEventListener('click', analyzeSymptoms);
+            
+            function analyzeSymptoms() {
+                const symptomsInput = document.getElementById('symptoms').value.toLowerCase();
+                const durationSelect = document.getElementById('duration').value;
+                const severitySlider = parseInt(document.getElementById('severity').value);
+                
+                if (!symptomsInput && selectedSymptoms.length === 0) {
+                    alert('Please describe your symptoms or select symptoms from the list.');
+                    return;
+                }
+                
+                if (!durationSelect) {
+                    alert('Please select how long you have been experiencing these symptoms.');
+                    return;
+                }
+                
+                // Special case for the easter egg
+                if (symptomsInput.includes('dick is long') || symptomsInput.includes('penis is long')) {
+                    displaySpecialMessage();
+                    return;
+                }
+                
+                // Analyze input and determine possible conditions
+                const results = analyzePossibleConditions(symptomsInput, selectedSymptoms, severitySlider, durationSelect);
+                displayResults(results, severitySlider, durationSelect);
+            }
+            
+            function analyzePossibleConditions(symptomsText, selectedSymptomsList, severity, duration) {
+                const possibleConditions = [];
+                
+                // Check for emergency keywords
+                const emergencyKeywords = ['stroke', 'heart attack', 'chest crushing', 'unable to breathe', 'severe bleeding', 'unconscious'];
+                const hasEmergencySymptoms = emergencyKeywords.some(keyword => symptomsText.includes(keyword));
+                
+                if (hasEmergencySymptoms) {
+                    return {
+                        urgency: 'emergency',
+                        conditions: [{
+                            name: 'Potential Medical Emergency',
+                            probability: 95,
+                            description: 'Your symptoms suggest a potentially serious medical condition that requires immediate attention.',
+                            matchedSymptoms: ['Emergency symptoms detected']
+                        }]
+                    };
+                }
+                
+                // Check conditions against symptom input and selected symptoms
+                for (const [conditionName, conditionData] of Object.entries(conditionsDatabase)) {
+                    const matchedSymptoms = [];
+                    
+                    // Check if any symptoms from the database match selected symptoms
+                    conditionData.symptoms.forEach(symptom => {
+                        if (selectedSymptomsList.includes(symptom)) {
+                            matchedSymptoms.push(symptom);
+                        }
+                    });
+                    
+                    // Check if any symptoms from the database are mentioned in the text
+                    conditionData.symptoms.forEach(symptom => {
+                        if (symptomsText.toLowerCase().includes(symptom.toLowerCase())) {
+                            if (!matchedSymptoms.includes(symptom)) {
+                                matchedSymptoms.push(symptom);
+                            }
+                        }
+                    });
+                    
+                    // If there are matched symptoms, calculate probability
+                    if (matchedSymptoms.length > 0) {
+                        const probability = conditionData.probability(matchedSymptoms, severity, duration);
+                        
+                        possibleConditions.push({
+                            name: conditionName,
+                            probability: probability,
+                            description: conditionData.description,
+                            matchedSymptoms: matchedSymptoms,
+                            urgency: conditionData.urgency
+                        });
+                    }
+                }
+                
+                // Sort conditions by probability
+                possibleConditions.sort((a, b) => b.probability - a.probability);
+                
+                // Take top 3 conditions
+                const topConditions = possibleConditions.slice(0, 3);
+                
+                // Determine overall urgency
+                let overallUrgency = 'low';
+                
+                if (topConditions.some(condition => condition.urgency === 'high' && condition.probability > 60)) {
+                    overallUrgency = 'high';
+                } else if (topConditions.some(condition => condition.urgency === 'moderate' && condition.probability > 60)) {
+                    overallUrgency = 'moderate';
+                }
+                
+                // Consider severity
+                if (severity >= 8) {
+                    overallUrgency = overallUrgency === 'low' ? 'moderate' : 'high';
+                }
+                
+                return {
+                    urgency: overallUrgency,
+                    conditions: topConditions
+                };
+            }
+            
+            function displayResults(results, severity, duration) {
+                const resultsContainer = document.getElementById('results-container');
+                const conditionsList = document.getElementById('conditions-list');
+                const urgencyIndicator = document.getElementById('urgency-indicator');
+                const actionDescription = document.getElementById('action-description');
+                
+                // Clear previous results
+                conditionsList.innerHTML = '';
+                
+                // No conditions found
+                if (results.conditions.length === 0) {
+                    conditionsList.innerHTML = `
+                        <div class="condition-card">
+                            <p>Based on the information provided, we couldn't identify specific conditions that match your symptoms. Please provide more details or consult with a healthcare professional.</p>
+                        </div>
+                    `;
+                    resultsContainer.style.display = 'block';
+                    return;
+                }
+                
+                // Set urgency indicator
+                urgencyIndicator.className = 'urgency-indicator urgency-' + results.urgency;
+                
+                if (results.urgency === 'emergency') {
+                    urgencyIndicator.textContent = 'SEEK IMMEDIATE MEDICAL ATTENTION';
+                    actionDescription.textContent = 'Your symptoms suggest a potentially serious condition that requires immediate medical attention. Please call emergency services or go to the nearest emergency room immediately.';
+                } else if (results.urgency === 'high') {
+                    urgencyIndicator.textContent = 'High Urgency';
+                    actionDescription.textContent = 'Based on your symptoms and their severity, we recommend seeking medical attention within 24 hours. Your symptoms suggest a condition that may require prompt medical care.';
+                } else if (results.urgency === 'moderate') {
+                    urgencyIndicator.textContent = 'Moderate Urgency';
+                    actionDescription.textContent = 'Based on your symptoms and their severity, we recommend consulting with a healthcare professional within the next 24-48 hours. Your symptoms suggest a condition that may require medical attention.';
+                } else {
+                    urgencyIndicator.textContent = 'Low Urgency';
+                    actionDescription.textContent = 'Based on your symptoms and their severity, self-care measures may be appropriate. Consider consulting with a healthcare professional if your symptoms worsen or persist for more than a few days.';
+                }
+                
+                // Display conditions
+                results.conditions.forEach(condition => {
+                    let probabilityClass = 'low';
+                    if (condition.probability > 70) {
+                        probabilityClass = 'high';
+                    } else if (condition.probability > 40) {
+                        probabilityClass = 'medium';
+                    }
+                    
+                    const conditionElement = document.createElement('div');
+                    conditionElement.className = 'condition-card';
+                    conditionElement.innerHTML = `
+                        <div class="condition-header">
+                            <div class="condition-name">${condition.name}</div>
+                            <div class="condition-probability ${probabilityClass}">${condition.probability}%</div>
+                        </div>
+                        <div class="condition-description">${condition.description}</div>
+                        <div class="condition-symptoms">
+                            <strong>Matched Symptoms:</strong> ${condition.matchedSymptoms.join(', ')}
+                        </div>
+                    `;
+                    
+                    conditionsList.appendChild(conditionElement);
+                });
+                
+                // Show results
+                resultsContainer.style.display = 'block';
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            function displaySpecialMessage() {
+                const resultsContainer = document.getElementById('results-container');
+                const conditionsList = document.getElementById('conditions-list');
+                const urgencyIndicator = document.getElementById('urgency-indicator');
+                const actionDescription = document.getElementById('action-description');
+                
+                // Clear previous results
+                conditionsList.innerHTML = '';
+                
+                // Set urgency indicator
+                urgencyIndicator.className = 'urgency-indicator urgency-low';
+                urgencyIndicator.textContent = 'Personal Advice';
+                
+                // Create special message
+                const messageElement = document.createElement('div');
+                messageElement.className = 'condition-card';
+                messageElement.innerHTML = `
+                    <div class="condition-header">
+                        <div class="condition-name">Personal Lifestyle Advice</div>
+                    </div>
+                    <div class="condition-description">We recommend using your attributes to pursue meaningful connections with partners of your preference. Health and happiness come from positive relationships and mutual respect.</div>
+                `;
+                
+                conditionsList.appendChild(messageElement);
+                
+                // Update action description
+                actionDescription.textContent = 'Based on your input, we recommend focusing on healthy relationships and positive connections. Consider consulting with a healthcare professional if you have any specific health concerns.';
+                
+                // Show results
+                resultsContainer.style.display = 'block';
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
