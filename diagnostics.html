@@ -404,6 +404,143 @@
             font-size: 14px;
         }
         
+        #results-container {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+        }
+        
+        .results-header {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #3ecfaf;
+        }
+        
+        .condition-card {
+            background-color: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .condition-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .condition-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .condition-probability {
+            background-color: #222;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #fff;
+        }
+        
+        .condition-probability.high {
+            background-color: #ff5c5c;
+        }
+        
+        .condition-probability.medium {
+            background-color: #ffbb33;
+        }
+        
+        .condition-probability.low {
+            background-color: #3ecfaf;
+        }
+        
+        .condition-description {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .condition-symptoms {
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .condition-symptoms strong {
+            color: #ccc;
+        }
+        
+        .action-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #111;
+            border-radius: 8px;
+            border-left: 3px solid #3ecfaf;
+        }
+        
+        .action-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .action-description {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .urgency-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .urgency-emergency {
+            background-color: #ff5c5c;
+            color: #fff;
+        }
+        
+        .urgency-urgent {
+            background-color: #ffbb33;
+            color: #000;
+        }
+        
+        .urgency-moderate {
+            background-color: #3ecfaf;
+            color: #000;
+        }
+        
+        .urgency-low {
+            background-color: #555;
+            color: #fff;
+        }
+        
+        .disclaimer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 92, 92, 0.1);
+            border-radius: 8px;
+            font-size: 13px;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        .disclaimer strong {
+            color: #ff5c5c;
+        }
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -444,7 +581,7 @@
             </a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="diagnosis-tool.html" class="active">Diagnosis Tool</a>
+                <a href="diagnostics.html" class="active">Diagnosis Tool</a>
                 <a href="learn.html">Learn</a>
                 <a href="your-records.html">Your Records</a>
                 <a href="find-doctor.html">Find a Doctor</a>
@@ -466,10 +603,8 @@
                 </div>
                 
                 <div class="tab-content active" id="symptoms-tab">
-                    <div class="symptom-tags">
-                        <div class="symptom-tag">Headache <button>×</button></div>
-                        <div class="symptom-tag">Fever <button>×</button></div>
-                        <div class="symptom-tag">Cough <button>×</button></div>
+                    <div class="symptom-tags" id="selected-symptoms">
+                        <!-- Tags will be added here dynamically -->
                     </div>
                     
                     <div class="form-group">
@@ -480,12 +615,18 @@
                     <div class="form-group">
                         <label>Common symptoms you can add:</label>
                         <div class="common-symptoms">
+                            <button class="common-symptom">Headache</button>
+                            <button class="common-symptom">Fever</button>
+                            <button class="common-symptom">Cough</button>
                             <button class="common-symptom">Fatigue</button>
                             <button class="common-symptom">Nausea</button>
                             <button class="common-symptom">Dizziness</button>
                             <button class="common-symptom">Sore throat</button>
                             <button class="common-symptom">Chest pain</button>
                             <button class="common-symptom">Back pain</button>
+                            <button class="common-symptom">Rash</button>
+                            <button class="common-symptom">Joint pain</button>
+                            <button class="common-symptom">Shortness of breath</button>
                         </div>
                     </div>
                     
@@ -494,7 +635,7 @@
                         <select class="form-control" id="duration">
                             <option value="">Please select</option>
                             <option value="hours">Less than 24 hours</option>
-                            <option value="days" selected>1-3 days</option>
+                            <option value="days">1-3 days</option>
                             <option value="week">Less than a week</option>
                             <option value="weeks">1-2 weeks</option>
                             <option value="month">More than 2 weeks</option>
@@ -503,7 +644,7 @@
                     
                     <div class="form-group">
                         <label for="severity">Rate the severity (1-10)</label>
-                        <input type="range" class="severity-range" id="severity" min="1" max="10" step="1" value="6">
+                        <input type="range" class="severity-range" id="severity" min="1" max="10" step="1" value="5">
                         <div class="severity-labels">
                             <span>Mild</span>
                             <span>Moderate</span>
@@ -512,8 +653,32 @@
                     </div>
                     
                     <div class="btn-group">
-                        <button class="btn">Analyze Symptoms</button>
+                        <button class="btn" id="analyze-btn">Analyze Symptoms</button>
                         <button class="btn btn-secondary">Save for Later</button>
+                    </div>
+                    
+                    <!-- Results section (initially hidden) -->
+                    <div id="results-container">
+                        <div id="urgency-indicator" class="urgency-indicator urgency-moderate">Moderate Urgency</div>
+                        <h3 class="results-header">Possible Conditions</h3>
+                        
+                        <div id="conditions-list">
+                            <!-- Conditions will be added here dynamically -->
+                        </div>
+                        
+                        <div class="action-section">
+                            <h4 class="action-title">Recommended Next Steps</h4>
+                            <p class="action-description" id="action-description">Based on your symptoms and their severity, we recommend consulting with a healthcare professional within the next 24-48 hours. Your symptoms suggest a condition that may require medical attention.</p>
+                            
+                            <div class="action-buttons">
+                                <button class="btn">Find a Doctor</button>
+                                <button class="btn btn-secondary">Save Results</button>
+                            </div>
+                        </div>
+                        
+                        <div class="disclaimer">
+                            <strong>Important:</strong> This AI analysis is not a medical diagnosis. It is meant to provide information and guidance only. Always consult with a qualified healthcare professional for proper diagnosis and treatment. In case of emergency, call emergency services immediately.
+                        </div>
                     </div>
                 </div>
                 
@@ -655,35 +820,90 @@
                 });
             });
             
+            // Selected symptoms array
+            let selectedSymptoms = [];
+            
             // Common symptoms buttons
             const commonSymptoms = document.querySelectorAll('.common-symptom');
             commonSymptoms.forEach(symptom => {
                 symptom.addEventListener('click', () => {
                     const symptomText = symptom.textContent;
-                    const symptomsArea = document.querySelector('.symptom-tags');
+                    
+                    // Check if symptom is already selected
+                    if (selectedSymptoms.includes(symptomText)) {
+                        return;
+                    }
+                    
+                    // Add to selected symptoms array
+                    selectedSymptoms.push(symptomText);
                     
                     // Create new symptom tag
-                    const newTag = document.createElement('div');
-                    newTag.className = 'symptom-tag';
-                    newTag.innerHTML = `${symptomText} <button>×</button>`;
-                    
-                    // Add remove functionality
-                    const removeBtn = newTag.querySelector('button');
-                    removeBtn.addEventListener('click', () => {
-                        newTag.remove();
-                    });
-                    
-                    symptomsArea.appendChild(newTag);
+                    addSymptomTag(symptomText);
                 });
             });
             
-            // Remove symptom tags
-            document.querySelectorAll('.symptom-tag button').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    btn.parentElement.remove();
+            // Function to add symptom tag
+            function addSymptomTag(symptomText) {
+                const symptomsArea = document.getElementById('selected-symptoms');
+                
+                // Create new symptom tag
+                const newTag = document.createElement('div');
+                newTag.className = 'symptom-tag';
+                newTag.innerHTML = `${symptomText} <button>×</button>`;
+                
+                // Add remove functionality
+                const removeBtn = newTag.querySelector('button');
+                removeBtn.addEventListener('click', () => {
+                    // Remove from selected symptoms array
+                    const index = selectedSymptoms.indexOf(symptomText);
+                    if (index > -1) {
+                        selectedSymptoms.splice(index, 1);
+                    }
+                    
+                    // Remove tag
+                    newTag.remove();
                 });
-            });
-        });
-    </script>
-</body>
-</html>
+                
+                symptomsArea.appendChild(newTag);
+            }
+            
+            // Medical conditions database
+            const conditionsDatabase = {
+                "Common Cold": {
+                    description: "A viral infection of the upper respiratory tract that causes inflammation in the nose and throat.",
+                    symptoms: ["Runny nose", "Sneezing", "Cough", "Sore throat", "Congestion", "Mild fever"],
+                    urgency: "low",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Cough", "Sore throat", "Fever", "Headache", "Fatigue"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 20;
+                        });
+                        
+                        if (severity <= 5) prob += 10;
+                        if (duration === "days" || duration === "week") prob += 10;
+                        
+                        return Math.min(prob, 95);
+                    }
+                },
+                "Influenza (Flu)": {
+                    description: "A contagious respiratory illness caused by influenza viruses that infect the nose, throat, and lungs.",
+                    symptoms: ["Fever", "Cough", "Sore throat", "Body aches", "Fatigue", "Headache"],
+                    urgency: "moderate",
+                    probability: function(symptoms, severity, duration) {
+                        let prob = 0;
+                        const relevantSymptoms = ["Fever", "Cough", "Sore throat", "Fatigue", "Headache"];
+                        
+                        relevantSymptoms.forEach(s => {
+                            if (symptoms.includes(s)) prob += 15;
+                        });
+                        
+                        if (severity > 5) prob += 20;
+                        if (duration === "days" || duration === "week") prob += 15;
+                        
+                        return Math.min(prob, 90);
+                    }
+                },
+                "Migraine": {
+                    description: "A neurological condition that causes severe headaches, often with additional
