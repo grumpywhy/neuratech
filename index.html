@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedMind - AI-Enhanced Medical Diagnosis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            color: #3ecfaf;
+        }
+        
+        .logo-text {
+            background: linear-gradient(90deg, #3ecfaf, #4e7cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #fff;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #3ecfaf, #4e7cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .login-container {
+            background-color: #111;
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 60px;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .login-subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3ecfaf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .messages {
+            margin: 25px 0;
+        }
+        
+        .message {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .message-content {
+            background-color: #0072ff;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 16px;
+            max-width: 90%;
+            font-size: 14px;
+            line-height: 1.4;
+            text-align: left;
+        }
+        
+        .login-button {
+            background-color: #3ecfaf;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .login-button:hover {
+            background-color: #35b89c;
+        }
+        
+        .feature-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #3ecfaf, #4e7cff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: #111;
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s;
+            text-align: left;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .feature-card p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .early-access {
+            background-color: #111;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .early-access h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .early-access p {
+            color: #aaa;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .email-form {
+            display: flex;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .email-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px 0 0 8px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        .submit-btn {
+            background-color: #3ecfaf;
+            color: #000;
+            font-weight: 600;
+            padding: 0 20px;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #35b89c;
+        }
+        
+        .good-section {
+            padding: 80px 0;
+            background-color: #0a0a0a;
+            margin-top: 60px;
+        }
+        
+        .good-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .good-card {
+            background-color: #111;
+            border-radius: 12px;
+            padding: 25px;
+            height: 100%;
+        }
+        
+        .good-card h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #3ecfaf;
+        }
+        
+        .good-card p {
+            color: #888;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        footer {
+            background-color: #080808;
+            padding: 40px 0;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3ecfaf;
+        }
+        
+        .copyright {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+            
+            .email-input {
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+            
+            .submit-btn {
+                border-radius: 8px;
+                padding: 12px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner" style="background-color: #3ecfaf; color: #000; text-align: center; padding: 10px 0; font-weight: 600; position: relative; overflow: hidden;">
+        <div style="position: relative; z-index: 2;">CA: soon</div>
+        <div style="position: absolute; top: 0; right: 0; width: 50px; height: 100%; background: linear-gradient(90deg, transparent, #3ecfaf 70%);"></div>
+    </div>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🏥</div>
+                <div class="logo-text">MedMind</div>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Diagnosis Tool</a>
+                <a href="#">Learn</a>
+                <a href="#">Your Records</a>
+                <a href="#">Find a Doctor</a>
+                <a href="#">About Us</a>
+            </div>
+        </nav>
+        
+        <div class="main-content">
+            <div class="hero">
+                <h1>AI-Enhanced Medical Diagnosis</h1>
+                <p>MedMind uses artificial intelligence to assist patients by analyzing their symptoms, medical history, and vital readings to suggest potential diagnoses — not to replace doctors, but to empower both patients and healthcare professionals with better information faster.</p>
+            </div>
+            
+            <div class="login-container">
+                <h2 class="login-title">How can MedMind help you?</h2>
+                <p class="login-subtitle">Our AI assistant is ready to analyze your symptoms</p>
+                
+                <div class="messages">
+                    <div class="message">
+                        <div class="avatar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="white" stroke-width="1.5"/>
+                                <path d="M20 21C20 16.5817 16.4183 13 12 13C7.58172 13 4 16.5817 4 21" stroke="white" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="message-content">
+                            Hello, I'm your AI health assistant. I can help analyze your symptoms and suggest possible conditions. Remember, I don't replace your doctor, but I can provide information to discuss with them.
+                        </div>
+                    </div>
+                    
+                    <div class="message">
+                        <div class="avatar">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" stroke="white" stroke-width="1.5"/>
+                                <path d="M20 21C20 16.5817 16.4183 13 12 13C7.58172 13 4 16.5817 4 21" stroke="white" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        <div class="message-content">
+                            Would you like to check your symptoms, upload medical history, or connect a health device to share vital signs? Our AI is trained on millions of anonymized medical records with HIPAA-grade privacy protection.
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="login-button" id="symptomButton">
+                    Check My Symptoms
+                </button>
+                
+                <div id="symptomChecker" style="display: none; margin-top: 20px; text-align: left;">
+                    <h3 style="margin-bottom: 15px;">Symptom Checker</h3>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #aaa; font-size: 14px;">What symptoms are you experiencing?</label>
+                        <textarea id="symptomsInput" style="width: 100%; padding: 12px; background: #222; border: 1px solid #333; border-radius: 8px; color: #fff; min-height: 80px; font-size: 14px;" placeholder="Describe your symptoms here (e.g., headache, fever, cough)"></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #aaa; font-size: 14px;">How long have you been experiencing these symptoms?</label>
+                        <select id="durationSelect" style="width: 100%; padding: 12px; background: #222; border: 1px solid #333; border-radius: 8px; color: #fff; font-size: 14px;">
+                            <option value="">Please select</option>
+                            <option value="hours">Less than 24 hours</option>
+                            <option value="days">1-3 days</option>
+                            <option value="week">Less than a week</option>
+                            <option value="weeks">1-2 weeks</option>
+                            <option value="month">More than 2 weeks</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #aaa; font-size: 14px;">Rate the severity (1-10)</label>
+                        <input type="range" id="severityRange" min="1" max="10" step="1" value="5" style="width: 100%; accent-color: #3ecfaf;">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-top: 5px;">
+                            <span>Mild</span>
+                            <span>Moderate</span>
+                            <span>Severe</span>
+                        </div>
+                    </div>
+                    
+                    <button id="analyzeButton" style="background-color: #3ecfaf; color: #000; border: none; border-radius: 8px; padding: 12px 20px; width: 100%; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 15px;">Analyze Symptoms</button>
+                    
+                    <div id="resultsContainer" style="display: none; background: #1a1a1a; border-radius: 8px; padding: 20px; margin-top: 20px;">
+                        <h4 style="margin-bottom: 15px; color: #3ecfaf;">Possible Conditions</h4>
+                        <div id="resultsList"></div>
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #333;">
+                            <p style="color: #aaa; font-size: 14px; margin-bottom: 15px;">💡 <strong>Remember:</strong> This is not a medical diagnosis. Please consult with a healthcare professional.</p>
+                            <button id="findDoctorButton" style="background-color: #4e7cff; color: white; border: none; border-radius: 8px; padding: 10px 15px; font-size: 14px; cursor: pointer;">Find a Doctor</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <script>
+                    // Simple symptom checker functionality
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const symptomButton = document.getElementById('symptomButton');
+                        const symptomChecker = document.getElementById('symptomChecker');
+                        const analyzeButton = document.getElementById('analyzeButton');
+                        const resultsContainer = document.getElementById('resultsContainer');
+                        const resultsList = document.getElementById('resultsList');
+                        const findDoctorButton = document.getElementById('findDoctorButton');
+                        
+                        // Sample conditions database (in a real app, this would be much more comprehensive)
+                        const conditionsDatabase = {
+                            'headache': ['Tension headache', 'Migraine', 'Sinusitis', 'Dehydration'],
+                            'fever': ['Common cold', 'Influenza', 'COVID-19', 'Infection'],
+                            'cough': ['Common cold', 'Bronchitis', 'Asthma', 'COVID-19'],
+                            'sore throat': ['Strep throat', 'Common cold', 'Tonsillitis', 'Laryngitis'],
+                            'fatigue': ['Anemia', 'Depression', 'Sleep apnea', 'Chronic fatigue syndrome'],
+                            'nausea': ['Food poisoning', 'Gastroenteritis', 'Motion sickness', 'Migraine'],
+                            'dizziness': ['Vertigo', 'Low blood pressure', 'Inner ear infection', 'Anemia'],
+                            'chest pain': ['Angina', 'Acid reflux', 'Muscle strain', 'Anxiety'],
+                            'shortness of breath': ['Asthma', 'Anxiety', 'COPD', 'Heart failure'],
+                            'back pain': ['Muscle strain', 'Herniated disc', 'Sciatica', 'Arthritis']
+                        };
+                        
+                        // Show symptom checker when button is clicked
+                        symptomButton.addEventListener('click', function() {
+                            symptomChecker.style.display = 'block';
+                            symptomButton.style.display = 'none';
+                        });
+                        
+                        // Analyze symptoms when button is clicked
+                        analyzeButton.addEventListener('click', function() {
+                            const symptoms = document.getElementById('symptomsInput').value.toLowerCase();
+                            const duration = document.getElementById('durationSelect').value;
+                            const severity = document.getElementById('severityRange').value;
+                            
+                            // Clear previous results
+                            resultsList.innerHTML = '';
+                            
+                            if (!symptoms) {
+                                resultsList.innerHTML = '<p style="color: #ff5c5c;">Please enter your symptoms.</p>';
+                                resultsContainer.style.display = 'block';
+                                return;
+                            }
+                            
+                            // Simple matching algorithm (in a real app, this would be much more sophisticated)
+                            let possibleConditions = new Set();
+                            let urgencyLevel = 'low';
+                            
+                            // Check for symptoms in our database
+                            Object.keys(conditionsDatabase).forEach(key => {
+                                if (symptoms.includes(key)) {
+                                    conditionsDatabase[key].forEach(condition => {
+                                        possibleConditions.add(condition);
+                                    });
+                                }
+                            });
+                            
+                            // Adjust urgency based on severity and duration
+                            if (severity > 7) {
+                                urgencyLevel = 'high';
+                            } else if (severity > 4 && (duration === 'weeks' || duration === 'month')) {
+                                urgencyLevel = 'medium';
+                            }
+                            
+                            // Check for emergency symptoms
+                            const emergencySymptoms = ['chest pain', 'difficulty breathing', 'shortness of breath', 'severe pain'];
+                            for (const emergency of emergencySymptoms) {
+                                if (symptoms.includes(emergency)) {
+                                    urgencyLevel = 'emergency';
+                                    break;
+                                }
+                            }
+                            
+                            // Display results
+                            if (possibleConditions.size === 0) {
+                                resultsList.innerHTML = `
+                                    <p style="color: #aaa; margin-bottom: 15px;">Based on the information provided, we couldn't identify specific conditions. Please provide more details or consult with a healthcare professional.</p>
+                                `;
+                            } else {
+                                // Urgency message
+                                let urgencyMessage = '';
+                                let urgencyColor = '';
+                                
+                                switch(urgencyLevel) {
+                                    case 'emergency':
+                                        urgencyMessage = 'SEEK IMMEDIATE MEDICAL ATTENTION';
+                                        urgencyColor = '#ff5c5c';
+                                        break;
+                                    case 'high':
+                                        urgencyMessage = 'Consider consulting a doctor soon';
+                                        urgencyColor = '#ffa500';
+                                        break;
+                                    case 'medium':
+                                        urgencyMessage = 'Medical consultation recommended';
+                                        urgencyColor = '#ffdf00';
+                                        break;
+                                    default:
+                                        urgencyMessage = 'Monitor your symptoms';
+                                        urgencyColor = '#3ecfaf';
+                                }
+                                
+                                resultsList.innerHTML = `
+                                    <div style="margin-bottom: 15px; padding: 10px; border-radius: 5px; background: rgba(0,0,0,0.2); color: ${urgencyColor};">
+                                        <strong>${urgencyMessage}</strong>
+                                    </div>
+                                `;
+                                
+                                // Add conditions with probabilities
+                                resultsList.innerHTML += '<div style="margin-bottom: 15px;">';
+                                
+                                Array.from(possibleConditions).forEach(condition => {
+                                    // Generate a pseudo-random probability (in a real app this would use ML)
+                                    const probability = Math.floor(Math.random() * 41) + 20; // Random number between 20-60%
+                                    
+                                    resultsList.innerHTML += `
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                                            <span>${condition}</span>
+                                            <div style="width: 120px; height: 8px; background: #333; border-radius: 4px; overflow: hidden;">
+                                                <div style="width: ${probability}%; height: 100%; background: ${probability > 50 ? '#ff9d00' : '#4e7cff'};"></div>
+                                            </div>
+                                            <span style="font-size: 12px; color: #aaa;">${probability}%</span>
+                                        </div>
+                                    `;
+                                });
+                                
+                                resultsList.innerHTML += '</div>';
+                            }
+                            
+                            resultsContainer.style.display = 'block';
+                        });
+                        
+                        // Find doctor button (in a real app, this would link to a doctor finder)
+                        findDoctorButton.addEventListener('click', function() {
+                            alert('This would connect you with a healthcare professional. Feature coming soon.');
+                        });
+                    });
+                </script>
+            </div>
+            
+            <section class="feature-section">
+                <h2 class="section-title">Key Features</h2>
+                <p class="section-description">MedMind uses advanced AI to help you understand your health better and connect with healthcare providers when needed.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🩺</div>
+                        <h3>Symptom Checker</h3>
+                        <p>Input symptoms through guided questions. Our AI cross-references symptoms with medical databases to suggest possible conditions.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Medical History Upload</h3>
+                        <p>Securely upload past medical records. AI uses Natural Language Processing to find relevant patterns and improve diagnostic accuracy.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3>Vital Sign Integration</h3>
+                        <p>Connect devices like smartwatches, blood pressure monitors, and glucose meters for real-time data input to enhance diagnosis precision.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>AI Diagnosis Suggestions</h3>
+                        <p>Receive a list of possible conditions with probability ratings. MedMind always encourages users to follow up with a real doctor.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Telehealth Referral</h3>
+                        <p>Based on urgency, the platform can auto-schedule a telehealth consultation with a partner physician in your area.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>HIPAA-Grade Privacy</h3>
+                        <p>End-to-end encryption of user data. No third-party data sales. We put patient privacy first in everything we do.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="early-access">
+                <h2>Get Early Access</h2>
+                <p>Join our waitlist to be among the first to experience MedMind's AI-powered health insights.</p>
+                <form class="email-form">
+                    <input type="email" placeholder="Your email address" class="email-input" required>
+                    <button type="submit" class="submit-btn">Join Waitlist</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="good-section">
+        <div class="container">
+            <h2 class="section-title">The Good MedMind Does</h2>
+            <p class="section-description">MedMind democratizes access to healthcare by providing instant, affordable, and intelligent preliminary diagnostics to millions who cannot immediately reach a doctor.</p>
+            
+            <div class="good-grid">
+                <div class="good-card">
+                    <h3>Empowers Patients</h3>
+                    <p>Giving people information early can lead to faster, life-saving treatment and better health outcomes.</p>
+                </div>
+                
+                <div class="good-card">
+                    <h3>Relieves Healthcare Systems</h3>
+                    <p>AI triage can reduce unnecessary emergency visits and help prioritize care for those who need it most.</p>
+                </div>
+                
+                <div class="good-card">
+                    <h3>Promotes Preventative Care</h3>
+                    <p>People learn about risks before they become severe illnesses, enabling early intervention.</p>
+                </div>
+                
+                <div class="good-card">
+                    <h3>Bridges Healthcare Deserts</h3>
+                    <p>Those in remote or underserved areas can still get meaningful medical insights when doctors aren't readily available.</p>
+                </div>
+                
+                <div class="good-card">
+                    <h3>Reduces Health Inequities</h3>
+                    <p>Affordable, fast diagnosis levels the playing field for all socioeconomic classes, improving access to care.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <div class="logo-icon">🏥</div>
+                    <div class="logo-text">MedMind</div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#">Privacy & Consent</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Us</a>
+                    <a href="#">FAQ</a>
+                </div>
+                
+                <div class="copyright">
+                    © 2025 MedMind. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
